@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Статьи студентов Академии управления</title>
+</head>
+<body>
+  <h1>Перечень статей</h1>
+  <!-- Add a textbox for the filter value -->
+  <div>
+    <p>Для внесения информации воспользуйтесь <a href="https://clck.ru/36wfc7">формой</a>.</p>
+    <p>Система находится на стадии разработки.</p>
+    <p>Для запроса списка публикаций введите в поле: Фамилию, Фамилию Имя, рук ФамилиюРуководителя</p>
+  </div>
+  <label for="autor">Фамилия автора:</label>
+  <input type="text" id="autor" name="autor" placeholder="Enter Autor">
+  <button onclick="applyFilter()">Фамилия</button>
+  <div id="records-container"></div>
+
+  <div> <p>Также вы можете посмотреть <a href="https://orochimarusrus.github.io/menu/">меню</a> нашей столовой.</p> </div>
+  <script>
+    // Function to fetch and display filtered records
+
+    // Function to fetch and display filtered records
+    async function displayFilteredRecords(autor) {
+      try {
+        // Fetch the filtered records from the Google Apps Script with filter parameter
+        const response = await fetch(`https://script.google.com/macros/s/AKfycbwIZiH2iDRy92gxajM2gVdPCbhiiJh_qcBfe5ZwOQ63Zno3OSu1D0e80sYSgdlJJD4Z/exec?autor=${autor}`);
+        const records = await response.json();
+
+        // Display the records in the HTML
+        const recordsContainer = document.getElementById('records-container');
+        recordsContainer.innerHTML = '<pre>' + JSON.stringify(records, null, 2) + '</pre>';
+      } catch (error) {
+        console.error('Error fetching or displaying records:', error);
+      }
+    }
+
+    // Function to apply the filter when the button is clicked
+    function applyFilter() {
+      const autorInput = document.getElementById('autor');
+      const autorValue = autorInput.value;
+
+      // Call the function to display filtered records with the provided filter value
+      displayFilteredRecords(autorValue);
+    }
+
+
+  </script>
+</body>
+</html>
